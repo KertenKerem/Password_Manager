@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block main %}
+<style>
+    body{
+        padding:20px 20px;
+      }
+      
+      .results tr[visible='false'],
+      .no-result{
+        display:none;
+      }
+      
+      .results tr[visible='true']{
+        display:table-row;
+      }
+      
+      .counter{
+        padding:8px; 
+        color:#ccc;
+      }
+
+</style>
+
+<!-- ############################################ -->
+<br>
+                        <div class="container">
+                            <h2>Password Manager App</h2>
+                        </div>
+                        <br>
+
+                        <div class="container text-center">
+
+                            <form method="POST" action="/add">
+                                <input type="text" name="entry_name" placeholder="Entry Name" class="form-control" required>
+                                <br>
+                                <input type="text" name="site_url" placeholder="Site URL / IP Address" class="form-control" required>
+                                <br>
+                                <input type="text" name="entry_username" placeholder="Username" class="form-control" required>
+                                <br>
+                                <input type="password" name="entry_password" placeholder="Password" class="form-control" required>
+                                <br>
+                                <input type="text" name="entry_notes" placeholder="Notes" class="form-control">
+                                <br>
+                                <button class="btn btn-outline-primary">ADD</button>
+                            </form>
+                        </div>
+                        <br>
+                        <br>
+
+<!-- ############################################ -->
+                        <!--Girilen Kayıtları gösterdiğimiz alan-->
+                        <div class="form-group pull-right">
+                            <input type="text" class="search form-control" width="300px" placeholder="What you looking for?">
+                        </div>
+                        <br>
+                        <span class="counter pull-right"></span>
+                        <table class="table table-hover table-bordered results">
+                            <thead>
+                                <tr>
+                                    <th>Entry Name</th>
+                                    <th>Site URL / IP ADDRESS</th>
+                                    <th>Username</th>
+                                    <th>Password</th>
+                                    <th>Notes</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody id="test">
+                                {% for item in passwordlist %}
+                                    {% if item.is_hidden == 0 %}
+                                    <tr>
+                                        <td>{{ item.entry_name }}</td>
+                                        <td>{{ item.site_url }}</td>
+                                        <td>{{ item.entry_username }}</td>
+                                        <td><input type="password" value="{{ item.entry_password }}" id="{{ item.id }}" disabled/></td>
+                                        <td>{{ item.entry_notes }}</td>
+                                        <td>
+                                            <a href="/update/{{item.id}}" class="btn btn-outline-success"><i class="bi bi-pencil-square"></i></a>
+                                            <a href="/delete/{{item.id}}" class="btn btn-outline-danger"><i class="bi bi-trash3"></i></a>
+                                            <button onclick="pass_to_text({{item.id}})" class="btn btn-outline-primary"><i class="bi bi-eye"></i></button>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+    </div>
+    <a href="/export" class="btn btn-outline-success">Export as CSV</a>
+<br>
+<hr>
+<br>
+
+    {% endblock %}

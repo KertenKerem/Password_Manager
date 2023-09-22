@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <div class="container">
+        <h2>Password Manager App</h2>
+    </div>
+
+    <div class="container">
+        <form method="POST" action="/update/{{ updated_details.id }}">
+            <input type="text" name="entry_name" placeholder="Entry Name" class="form-control" value="{{ updated_details.entry_name }}" required>
+            <br>
+            <input type="text" name="site_url" placeholder="Site URL / IP Address" class="form-control" value="{{ updated_details.site_url }}" required>
+            <br>
+            <input type="text" name="entry_username" placeholder="Username" class="form-control" value="{{ updated_details.entry_username }}" required>
+            <br>
+            <input type="password" name="entry_password" placeholder="Password" class="form-control" value="{{ updated_details.entry_password }}" required>
+            <br>
+            <input type="text" name="entry_notes" placeholder="Notes" class="form-control" value="{{ updated_details.entry_notes }}">
+            <br>
+            <button class="btn btn-outline-primary">ADD</button>
+        </form>
+    </div>
+<hr>
+{% endblock %}
